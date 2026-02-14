@@ -21,7 +21,7 @@ async function fetchTrendingRepos() {
     const searchQuery = `created:>=${dateStr}`;
     console.log(`Search query: ${searchQuery}`);
 
-    const response = await octokit.search.repos({
+    const response = await octokit.rest.search.repos({
       q: searchQuery,
       sort: 'stars',
       order: 'desc',
