@@ -4,19 +4,34 @@ const path = require('path');
 
 const TOKEN = process.env.GITHUB_TOKEN || '';
 const REPO_COUNT = 10;
+const TIME_RANGE = process.env.TIME_RANGE || 'daily';
 
-async function fetchTrendingRepos() {
+async function fetchTrendingRepos(timeRange = 'daily') {
   const octokit = new Octokit({
     auth: TOKEN
   });
 
   try {
-    console.log('Fetching trending repositories...');
+    console.log(`Fetching trending repositories for ${timeRange} range...`);
 
-    const yesterday = new Date();
-    yesterday.setDate(yesterday.getDate() - 1);
-    yesterday.setHours(7, 0, 0, 0);
-    const dateStr = yesterday.toISOString();
+    const startDate = new Date();
+    
+    switch (timeRange) {
+      case 'daily':
+        startDate.setDate(startDate.getDate() - 1);
+        break;
+      case 'weekly':
+        startDate.setDate(startDate.getDate() - 7);
+        break;
+      case 'monthly':
+        startDate.setDate(startDate.getDate() - 30);
+        break;
+      default:
+        startDate.setDate(startDate.getDate() - 1);
+    }
+    
+    startDate.setHours(7, 0, 0, 0);
+    const dateStr = startDate.toISOString();
 
     const searchQuery = `created:>=${dateStr}`;
     console.log(`Search query: ${searchQuery}`);
@@ -72,7 +87,8 @@ async function fetchTrendingRepos() {
       });
     }
 
-    const outputPath = path.join(__dirname, '../data/trending-repos.json');
+    const today = new Date().toISOString().split('T')[0];
+    const outputPath = path.join(__dirname, `../data/trending-${timeRange}-${today}.json`);
     fs.mkdirSync(path.dirname(outputPath), { recursive: true });
     fs.writeFileSync(outputPath, JSON.stringify(repos, null, 2));
 
@@ -87,7 +103,8 @@ async function fetchTrendingRepos() {
 }
 
 if (require.main === module) {
-  fetchTrendingRepos()
+  const range = process.argv[2] || TIME_RANGE;
+  fetchTrendingRepos(range)
     .then(() => process.exit(0))
     .catch((error) => {
       console.error(error);

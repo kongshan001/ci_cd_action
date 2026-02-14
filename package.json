@@ -4,9 +4,15 @@
   "description": "Daily GitHub trending repositories tracker",
   "main": "index.js",
   "scripts": {
-    "start": "node src/fetch-trending.js && node src/generate-markdown.js && node src/deploy-pages.js",
+    "start": "node src/fetch-trending.js daily && node src/generate-markdown.js daily && node src/deploy-pages.js",
     "fetch": "node src/fetch-trending.js",
+    "fetch:daily": "node src/fetch-trending.js daily",
+    "fetch:weekly": "node src/fetch-trending.js weekly",
+    "fetch:monthly": "node src/fetch-trending.js monthly",
     "generate": "node src/generate-markdown.js",
+    "generate:daily": "node src/generate-markdown.js daily",
+    "generate:weekly": "node src/generate-markdown.js weekly",
+    "generate:monthly": "node src/generate-markdown.js monthly",
     "deploy": "node src/deploy-pages.js"
   },
   "keywords": ["github", "trending", "stars", "actions"],

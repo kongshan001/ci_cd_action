@@ -1,11 +1,25 @@
 const fs = require('fs');
 const path = require('path');
 
-function generateMarkdown(repos) {
+const TIME_RANGE_LABELS = {
+  daily: '每日',
+  weekly: '每周',
+  monthly: '每月'
+};
+
+const TIME_RANGE_PERIODS = {
+  daily: '过去24小时',
+  weekly: '过去7天',
+  monthly: '过去30天'
+};
+
+function generateMarkdown(repos, timeRange = 'daily') {
   const today = new Date().toISOString().split('T')[0];
+  const label = TIME_RANGE_LABELS[timeRange] || '每日';
+  const period = TIME_RANGE_PERIODS[timeRange] || '过去24小时';
   
-  let markdown = `# GitHub Star 飙升项目日报 - ${today}\n\n`;
-  markdown += `> 📊 每日整理过去24小时内star增长最多的前10个项目\n\n`;
+  let markdown = `# GitHub Star 飙升项目${label}报告 - ${today}\n\n`;
+  markdown += `> 📊 ${label}整理${period}内star增长最多的前10个项目\n\n`;
   markdown += `---\n\n`;
   
   markdown += `## 🔥 前10名热门项目\n\n`;
@@ -74,8 +88,10 @@ function generateMarkdown(repos) {
   return markdown;
 }
 
-function generateHTML(repos) {
+function generateHTML(repos, timeRange = 'daily') {
   const today = new Date().toISOString().split('T')[0];
+  const label = TIME_RANGE_LABELS[timeRange] || '每日';
+  const period = TIME_RANGE_PERIODS[timeRange] || '过去24小时';
   
   let html = `<!DOCTYPE html>
 <html lang="zh-CN">
@@ -279,8 +295,8 @@ function generateHTML(repos) {
             <div style="margin-bottom: 20px;">
                 <a href="../index.html" style="color: white; text-decoration: none; background: rgba(255,255,255,0.2); padding: 10px 20px; border-radius: 5px; display: inline-block;">← 返回历史列表</a>
             </div>
-            <h1>🚀 GitHub Star 飙升项目日报</h1>
-            <p class="subtitle">${today} · 过去24小时star增长最多的前10个项目</p>
+            <h1>🚀 GitHub Star 飙升项目${label}报告</h1>
+            <p class="subtitle">${today} · ${period}内star增长最多的前10个项目</p>
         </div>
         
         <div class="content">
@@ -419,22 +435,28 @@ function generateHTML(repos) {
 
 function generateArchivePage() {
   const docsDir = path.join(__dirname, '../docs');
+  const archiveDir = path.join(docsDir, 'archive');
   
   if (!fs.existsSync(docsDir)) {
     return '';
   }
   
   const files = fs.readdirSync(docsDir);
-  const mdFiles = files.filter(f => f.startsWith('daily-') && f.endsWith('.md'));
+  const mdFiles = files.filter(f => f.match(/^(daily|weekly|monthly)-/) && f.endsWith('.md'));
   
   if (mdFiles.length === 0) {
     return '';
   }
   
-  const dates = mdFiles
-    .map(f => f.replace('daily-', '').replace('.md', ''))
-    .sort()
-    .reverse();
+  const items = mdFiles.map(f => {
+    const match = f.match(/^(daily|weekly|monthly)-(\d{4}-\d{2}-\d{2})\.md$/);
+    if (match) {
+      return { range: match[1], date: match[2] };
+    }
+    return null;
+  }).filter(Boolean);
+  
+  items.sort((a, b) => b.date.localeCompare(a.date));
   
   let html = `<!DOCTYPE html>
 <html lang="zh-CN">
@@ -560,20 +582,21 @@ function generateArchivePage() {
         <div class="content">
             <div class="info-box">
                 <h3>📊 数据说明</h3>
-                <p>每日自动整理过去24小时内star增长最多的前10个GitHub项目。点击日期查看该日的详细项目列表。</p>
+                <p>自动整理GitHub热门项目趋势。支持每日（过去24小时）、每周（过去7天）和每月（过去30天）的趋势报告。点击卡片查看详细内容。</p>
             </div>
             
             <div class="date-grid">
 `;
   
-  dates.forEach((date, index) => {
+  items.forEach((item, index) => {
     const isLatest = index === 0;
     const latestClass = isLatest ? ' latest' : '';
     const latestBadge = isLatest ? ' (最新)' : '';
+    const rangeLabel = TIME_RANGE_LABELS[item.range] || item.range;
     
-    html += `                <div class="date-card${latestClass}" onclick="window.location.href='archive/${date}.html'">
-                    <h3>${date}${latestBadge}</h3>
-                    <p>查看该日的热门项目</p>
+    html += `                <div class="date-card${latestClass}" onclick="window.location.href='archive/${item.range}/${item.date}.html'">
+                    <h3>${item.date} <span style="font-size: 0.7em; background: #667eea; color: white; padding: 2px 8px; border-radius: 10px; margin-left: 8px;">${rangeLabel}</span>${latestBadge}</h3>
+                    <p>查看${rangeLabel}热门项目</p>
                 </div>
 `;
   });
@@ -592,39 +615,39 @@ function generateArchivePage() {
   return html;
 }
 
-async function generateDocs() {
-  const dataPath = path.join(__dirname, '../data/trending-repos.json');
+async function generateDocs(timeRange = 'daily') {
+  const today = new Date().toISOString().split('T')[0];
+  const dataPath = path.join(__dirname, `../data/trending-${timeRange}-${today}.json`);
   
   if (!fs.existsSync(dataPath)) {
-    console.error('Data file not found. Please run fetch-trending.js first.');
+    console.error(`Data file not found: ${dataPath}. Please run fetch-trending.js first.`);
     process.exit(1);
   }
   
   const repos = JSON.parse(fs.readFileSync(dataPath, 'utf-8'));
   
-  const markdown = generateMarkdown(repos);
-  const html = generateHTML(repos);
+  const markdown = generateMarkdown(repos, timeRange);
+  const html = generateHTML(repos, timeRange);
   
   const docsDir = path.join(__dirname, '../docs');
-  const archiveDir = path.join(docsDir, 'archive');
+  const archiveDir = path.join(docsDir, 'archive', timeRange);
   fs.mkdirSync(docsDir, { recursive: true });
   fs.mkdirSync(archiveDir, { recursive: true });
   
-  const today = new Date().toISOString().split('T')[0];
-  
-  fs.writeFileSync(path.join(docsDir, `daily-${today}.md`), markdown);
+  fs.writeFileSync(path.join(docsDir, `${timeRange}-${today}.md`), markdown);
   fs.writeFileSync(path.join(archiveDir, `${today}.html`), html);
   
   const archivePage = generateArchivePage();
   fs.writeFileSync(path.join(docsDir, 'index.html'), archivePage);
   
-  console.log(`Markdown generated: ${path.join(docsDir, `daily-${today}.md`)}`);
+  console.log(`Markdown generated: ${path.join(docsDir, `${timeRange}-${today}.md`)}`);
   console.log(`Archive HTML generated: ${path.join(archiveDir, `${today}.html`)}`);
   console.log(`Archive index page generated: ${path.join(docsDir, 'index.html')}`);
 }
 
 if (require.main === module) {
-  generateDocs()
+  const timeRange = process.argv[2] || process.env.TIME_RANGE || 'daily';
+  generateDocs(timeRange)
     .then(() => process.exit(0))
     .catch((error) => {
       console.error(error);
