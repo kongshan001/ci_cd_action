@@ -1,0 +1,721 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GitHub Star 飙升项目日报 - 2026-02-14</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 40px;
+            text-align: center;
+        }
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+        .header .subtitle {
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+        .content {
+            padding: 40px;
+        }
+        .summary-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 40px;
+        }
+        .summary-table th,
+        .summary-table td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        .summary-table th {
+            background-color: #f8f9fa;
+            font-weight: 600;
+            color: #333;
+        }
+        .summary-table tr:hover {
+            background-color: #f5f5f5;
+        }
+        .repo-card {
+            background: #f8f9fa;
+            border-radius: 8px;
+            padding: 25px;
+            margin-bottom: 30px;
+            border-left: 4px solid #667eea;
+        }
+        .repo-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        .repo-title {
+            font-size: 1.5em;
+            color: #333;
+            margin-bottom: 10px;
+        }
+        .repo-title a {
+            color: #667eea;
+            text-decoration: none;
+        }
+        .repo-title a:hover {
+            text-decoration: underline;
+        }
+        .repo-description {
+            color: #666;
+            margin-bottom: 20px;
+            font-size: 1.1em;
+        }
+        .repo-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        .stat-item {
+            background: white;
+            padding: 10px 15px;
+            border-radius: 6px;
+            border: 1px solid #e0e0e0;
+        }
+        .stat-label {
+            font-size: 0.9em;
+            color: #888;
+            margin-bottom: 5px;
+        }
+        .stat-value {
+            font-weight: 600;
+            color: #333;
+            font-size: 1.1em;
+        }
+        .repo-topics {
+            margin-bottom: 15px;
+        }
+        .topic {
+            display: inline-block;
+            background: #667eea;
+            color: white;
+            padding: 4px 12px;
+            border-radius: 15px;
+            font-size: 0.85em;
+            margin-right: 8px;
+            margin-bottom: 8px;
+        }
+        .repo-summary {
+            background: white;
+            padding: 15px;
+            border-radius: 6px;
+            border-left: 3px solid #764ba2;
+            color: #555;
+            line-height: 1.6;
+        }
+        .repo-link {
+            display: inline-block;
+            margin-top: 15px;
+            padding: 10px 25px;
+            background: #667eea;
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            transition: background 0.3s;
+        }
+        .repo-link:hover {
+            background: #764ba2;
+        }
+        .footer {
+            background: #f8f9fa;
+            padding: 20px;
+            text-align: center;
+            color: #666;
+            border-top: 1px solid #e0e0e0;
+        }
+        .stats-section {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 8px;
+            margin-top: 30px;
+        }
+        .stats-section h3 {
+            margin-bottom: 20px;
+        }
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+        }
+        .stat-card {
+            background: rgba(255,255,255,0.1);
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+        }
+        .stat-card h4 {
+            font-size: 2em;
+            margin-bottom: 5px;
+        }
+        .stat-card p {
+            opacity: 0.9;
+        }
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 1.8em;
+            }
+            .content {
+                padding: 20px;
+            }
+            .repo-stats {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🚀 GitHub Star 飙升项目日报</h1>
+            <p class="subtitle">2026-02-14 · 过去24小时star增长最多的前10个项目</p>
+        </div>
+        
+        <div class="content">
+            <table class="summary-table">
+                <thead>
+                    <tr>
+                        <th>排名</th>
+                        <th>项目</th>
+                        <th>⭐ Stars</th>
+                        <th>📝 语言</th>
+                        <th>👤 作者</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>1</strong></td>
+                        <td><a href="https://github.com/andyhuo520/openclaw-assistant-mvp" target="_blank">openclaw-assistant-mvp</a></td>
+                        <td>133</td>
+                        <td>JavaScript</td>
+                        <td><a href="https://github.com/andyhuo520" target="_blank">andyhuo520</a></td>
+                    </tr>
+                    <tr>
+                        <td><strong>2</strong></td>
+                        <td><a href="https://github.com/HKUDS/FastCode" target="_blank">FastCode</a></td>
+                        <td>129</td>
+                        <td>Python</td>
+                        <td><a href="https://github.com/HKUDS" target="_blank">HKUDS</a></td>
+                    </tr>
+                    <tr>
+                        <td><strong>3</strong></td>
+                        <td><a href="https://github.com/MiniMax-AI/MiniMax-M2.5" target="_blank">MiniMax-M2.5</a></td>
+                        <td>111</td>
+                        <td>Unknown</td>
+                        <td><a href="https://github.com/MiniMax-AI" target="_blank">MiniMax-AI</a></td>
+                    </tr>
+                    <tr>
+                        <td><strong>4</strong></td>
+                        <td><a href="https://github.com/craigsc/cmux" target="_blank">cmux</a></td>
+                        <td>88</td>
+                        <td>Shell</td>
+                        <td><a href="https://github.com/craigsc" target="_blank">craigsc</a></td>
+                    </tr>
+                    <tr>
+                        <td><strong>5</strong></td>
+                        <td><a href="https://github.com/codefactory-co/kimoring-ai-skills" target="_blank">kimoring-ai-skills</a></td>
+                        <td>77</td>
+                        <td>Unknown</td>
+                        <td><a href="https://github.com/codefactory-co" target="_blank">codefactory-co</a></td>
+                    </tr>
+                    <tr>
+                        <td><strong>6</strong></td>
+                        <td><a href="https://github.com/yzc0731/HinFlow" target="_blank">HinFlow</a></td>
+                        <td>76</td>
+                        <td>Python</td>
+                        <td><a href="https://github.com/yzc0731" target="_blank">yzc0731</a></td>
+                    </tr>
+                    <tr>
+                        <td><strong>7</strong></td>
+                        <td><a href="https://github.com/3stoneBrother/code-audit" target="_blank">code-audit</a></td>
+                        <td>73</td>
+                        <td>Python</td>
+                        <td><a href="https://github.com/3stoneBrother" target="_blank">3stoneBrother</a></td>
+                    </tr>
+                    <tr>
+                        <td><strong>8</strong></td>
+                        <td><a href="https://github.com/SamuelQZQ/auto-coding-agent-demo" target="_blank">auto-coding-agent-demo</a></td>
+                        <td>55</td>
+                        <td>TypeScript</td>
+                        <td><a href="https://github.com/SamuelQZQ" target="_blank">SamuelQZQ</a></td>
+                    </tr>
+                    <tr>
+                        <td><strong>9</strong></td>
+                        <td><a href="https://github.com/thanhdo1110/Locket-Gold" target="_blank">Locket-Gold</a></td>
+                        <td>53</td>
+                        <td>Python</td>
+                        <td><a href="https://github.com/thanhdo1110" target="_blank">thanhdo1110</a></td>
+                    </tr>
+                    <tr>
+                        <td><strong>10</strong></td>
+                        <td><a href="https://github.com/HackingDave/btrpa-scan" target="_blank">btrpa-scan</a></td>
+                        <td>47</td>
+                        <td>Python</td>
+                        <td><a href="https://github.com/HackingDave" target="_blank">HackingDave</a></td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="repo-card">
+                <div class="repo-header">
+                    <div class="repo-title">
+                        <a href="https://github.com/andyhuo520/openclaw-assistant-mvp" target="_blank">1. openclaw-assistant-mvp</a>
+                    </div>
+                </div>
+                <div class="repo-description">OpenClaw Desktop Assistant MVP - Electron-based AI voice assistant with Live2D character animations, real-time speech recognition, and text-to-speech</div>
+                
+                <div class="repo-stats">
+                    <div class="stat-item">
+                        <div class="stat-label">⭐ Stars</div>
+                        <div class="stat-value">133</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-label">👁️ Watchers</div>
+                        <div class="stat-value">133</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-label">🍴 Forks</div>
+                        <div class="stat-value">16</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-label">🐛 Issues</div>
+                        <div class="stat-value">1</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-label">📝 语言</div>
+                        <div class="stat-value">JavaScript</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-label">📅 创建于</div>
+                        <div class="stat-value">2/13/2026</div>
+                    </div>
+                </div>
+                <div class="repo-summary">
+                    <strong>📋 项目简介：</strong> OpenClaw Desktop Assistant MVP  一个结合 Live2D 和 OpenClaw 的智能桌面助手最小可行版本。   功能特性  - ✅ Electron 桌面应用 - ✅ 简洁的 UI 界面 - ✅ 语音输入支持（按住说话） - ✅ 模拟 OpenClaw 数据 - ✅ 邮件查询 - ✅ 日程查询 - ✅ 快捷操作按钮   项目结构   openclaw-assistant-mvp/ ├── electron/            Electron 主进程 │   ├── main.js         应用入口 │   └── preload.js      预加载脚本 ├── public/             前端资源 │   ├── index.html      主页面 │   ├── styles.css      样式 │   └── app.js          应用逻辑 └── package.json        项目配置    安装和运行   1. 安装依赖  bash...
+                </div>
+                <a href="https://github.com/andyhuo520/openclaw-assistant-mvp" target="_blank" class="repo-link">👉 查看项目详情</a>
+            </div>
+
+            <div class="repo-card">
+                <div class="repo-header">
+                    <div class="repo-title">
+                        <a href="https://github.com/HKUDS/FastCode" target="_blank">2. FastCode</a>
+                    </div>
+                </div>
+                <div class="repo-description">FastCode: Accelerating and Streamlining Your Code Understanding</div>
+                
+                <div class="repo-stats">
+                    <div class="stat-item">
+                        <div class="stat-label">⭐ Stars</div>
+                        <div class="stat-value">129</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-label">👁️ Watchers</div>
+                        <div class="stat-value">129</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-label">🍴 Forks</div>
+                        <div class="stat-value">9</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-label">🐛 Issues</div>
+                        <div class="stat-value">0</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-label">📝 语言</div>
+                        <div class="stat-value">Python</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-label">📅 创建于</div>
+                        <div class="stat-value">2/13/2026</div>
+                    </div>
+                </div>
+                <div class="repo-summary">
+                    <strong>📋 项目简介：</strong> <div align="center">  <img src="assets/FastCode.svg" alt="FastCode Logo" width="200"/>  <!--  FastCode -->   FastCode: Accelerating and Streamlining Your Code Understanding  | ⚡ High Performance | 💰 Cost Efficient | 🚀 Fast & Scalable |  [![Python 3.12+](https://img.shields.io/badge/python-3.12+-blue.svg)](https://www.python.org/downloads/) [![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE) [![Code style: black](https://img.shields.io/badge/code%20style-bl...
+                </div>
+                <a href="https://github.com/HKUDS/FastCode" target="_blank" class="repo-link">👉 查看项目详情</a>
+            </div>
+
+            <div class="repo-card">
+                <div class="repo-header">
+                    <div class="repo-title">
+                        <a href="https://github.com/MiniMax-AI/MiniMax-M2.5" target="_blank">3. MiniMax-M2.5</a>
+                    </div>
+                </div>
+                <div class="repo-description">No description available</div>
+                
+                <div class="repo-stats">
+                    <div class="stat-item">
+                        <div class="stat-label">⭐ Stars</div>
+                        <div class="stat-value">111</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-label">👁️ Watchers</div>
+                        <div class="stat-value">111</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-label">🍴 Forks</div>
+                        <div class="stat-value">13</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-label">🐛 Issues</div>
+                        <div class="stat-value">0</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-label">📝 语言</div>
+                        <div class="stat-value">Unknown</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-label">📅 创建于</div>
+                        <div class="stat-value">2/13/2026</div>
+                    </div>
+                </div>
+                <div class="repo-summary">
+                    <strong>📋 项目简介：</strong> <div align="center">   <picture>     <source srcset="figures/MiniMaxLogo-Dark.png" media="(prefers-color-scheme: dark)">       <img src="figures/MiniMaxLogo-Light.png" width="60%" alt="MiniMax">     </source>   </picture> </div> <hr>  <div align="center" style="line-height: 1.4; font-size:16px; margin-top: 30px;">   Join Our    <a href="https://platform.minimaxi.com/docs/faq/contact-us" target="blank" style="font-size:17px; margin: 2px;">     💬 WeChat   </a> |    <a href="https://discord.com/i...
+                </div>
+                <a href="https://github.com/MiniMax-AI/MiniMax-M2.5" target="_blank" class="repo-link">👉 查看项目详情</a>
+            </div>
+
+            <div class="repo-card">
+                <div class="repo-header">
+                    <div class="repo-title">
+                        <a href="https://github.com/craigsc/cmux" target="_blank">4. cmux</a>
+                    </div>
+                </div>
+                <div class="repo-description">cmux: tmux for Claude Code</div>
+                
+                <div class="repo-stats">
+                    <div class="stat-item">
+                        <div class="stat-label">⭐ Stars</div>
+                        <div class="stat-value">88</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-label">👁️ Watchers</div>
+                        <div class="stat-value">88</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-label">🍴 Forks</div>
+                        <div class="stat-value">1</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-label">🐛 Issues</div>
+                        <div class="stat-value">0</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-label">📝 语言</div>
+                        <div class="stat-value">Shell</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-label">📅 创建于</div>
+                        <div class="stat-value">2/14/2026</div>
+                    </div>
+                </div>
+                <div class="repo-topics">
+                    <span class="topic">claude</span>
+                    <span class="topic">claude-code</span>
+                    <span class="topic">git</span>
+                    <span class="topic">terminal</span>
+                </div>
+                <div class="repo-summary">
+                    <strong>📋 项目简介：</strong> cmux — tmux for Claude Code  Worktree lifecycle manager for parallel [Claude Code](https://docs.anthropic.com/en/docs/claude-code) sessions.  Run multiple Claude agents in parallel on the same repo — each in its own git worktree with isolated working directory, dependencies, build artifacts, etc.   Why  Because you wanna go fast without losing your goddamn mind.  Claude Code works best when it has full ownership of the working directory. When you want multiple agents working on different tas...
+                </div>
+                <a href="https://github.com/craigsc/cmux" target="_blank" class="repo-link">👉 查看项目详情</a>
+            </div>
+
+            <div class="repo-card">
+                <div class="repo-header">
+                    <div class="repo-title">
+                        <a href="https://github.com/codefactory-co/kimoring-ai-skills" target="_blank">5. kimoring-ai-skills</a>
+                    </div>
+                </div>
+                <div class="repo-description">No description available</div>
+                
+                <div class="repo-stats">
+                    <div class="stat-item">
+                        <div class="stat-label">⭐ Stars</div>
+                        <div class="stat-value">77</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-label">👁️ Watchers</div>
+                        <div class="stat-value">77</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-label">🍴 Forks</div>
+                        <div class="stat-value">73</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-label">🐛 Issues</div>
+                        <div class="stat-value">0</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-label">📝 语言</div>
+                        <div class="stat-value">Unknown</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-label">📅 创建于</div>
+                        <div class="stat-value">2/13/2026</div>
+                    </div>
+                </div>
+                <a href="https://github.com/codefactory-co/kimoring-ai-skills" target="_blank" class="repo-link">👉 查看项目详情</a>
+            </div>
+
+            <div class="repo-card">
+                <div class="repo-header">
+                    <div class="repo-title">
+                        <a href="https://github.com/yzc0731/HinFlow" target="_blank">6. HinFlow</a>
+                    </div>
+                </div>
+                <div class="repo-description">Official Code Implementation of Translating Flow to Policy via Hindsight Online Imitation</div>
+                
+                <div class="repo-stats">
+                    <div class="stat-item">
+                        <div class="stat-label">⭐ Stars</div>
+                        <div class="stat-value">76</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-label">👁️ Watchers</div>
+                        <div class="stat-value">76</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-label">🍴 Forks</div>
+                        <div class="stat-value">0</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-label">🐛 Issues</div>
+                        <div class="stat-value">0</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-label">📝 语言</div>
+                        <div class="stat-value">Python</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-label">📅 创建于</div>
+                        <div class="stat-value">2/13/2026</div>
+                    </div>
+                </div>
+                <div class="repo-summary">
+                    <strong>📋 项目简介：</strong> [ICLR 2026] Translating Flow to Policy via Hindsight Online Imitation  [Yitian Zheng](https://github.com/unprintable123)\, [Zhangchen Ye](https://yzc0731.github.io/)\, [Weijun Dong](https://dwjshift.github.io/)\, [Shengjie Wang](https://shengjiewang-jason.github.io/), [Yuyang Liu](https://scholar.google.com/citations?user=0ROQMVcAAAAJ&hl=en), [Chongjie Zhang](https://mig-ai.github.io/person-zhangchongjie.html), [Chuan Wen](https://alvinwen428.github.io/)<sup>&x2709;</sup>, [Yang Gao](https...
+                </div>
+                <a href="https://github.com/yzc0731/HinFlow" target="_blank" class="repo-link">👉 查看项目详情</a>
+            </div>
+
+            <div class="repo-card">
+                <div class="repo-header">
+                    <div class="repo-title">
+                        <a href="https://github.com/3stoneBrother/code-audit" target="_blank">7. code-audit</a>
+                    </div>
+                </div>
+                <div class="repo-description">No description available</div>
+                
+                <div class="repo-stats">
+                    <div class="stat-item">
+                        <div class="stat-label">⭐ Stars</div>
+                        <div class="stat-value">73</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-label">👁️ Watchers</div>
+                        <div class="stat-value">73</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-label">🍴 Forks</div>
+                        <div class="stat-value">20</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-label">🐛 Issues</div>
+                        <div class="stat-value">0</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-label">📝 语言</div>
+                        <div class="stat-value">Python</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-label">📅 创建于</div>
+                        <div class="stat-value">2/13/2026</div>
+                    </div>
+                </div>
+                <div class="repo-summary">
+                    <strong>📋 项目简介：</strong> Code Audit Skill for Claude Code  > Professional white-box code security audit skill with 55+ vulnerability types, dual-track audit model, and multi-agent deep analysis.  [中文文档](READMECN.md)   Overview  Code Audit is a professional security audit skill for [Claude Code](https://docs.anthropic.com/en/docs/claude-code). It performs static white-box analysis to systematically discover and verify security vulnerabilities in source code.   Key Features  - 9 Languages: Java, Python, Go, PH...
+                </div>
+                <a href="https://github.com/3stoneBrother/code-audit" target="_blank" class="repo-link">👉 查看项目详情</a>
+            </div>
+
+            <div class="repo-card">
+                <div class="repo-header">
+                    <div class="repo-title">
+                        <a href="https://github.com/SamuelQZQ/auto-coding-agent-demo" target="_blank">8. auto-coding-agent-demo</a>
+                    </div>
+                </div>
+                <div class="repo-description">一个长达 10 小时的 AI 全自动编程实验</div>
+                
+                <div class="repo-stats">
+                    <div class="stat-item">
+                        <div class="stat-label">⭐ Stars</div>
+                        <div class="stat-value">55</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-label">👁️ Watchers</div>
+                        <div class="stat-value">55</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-label">🍴 Forks</div>
+                        <div class="stat-value">21</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-label">🐛 Issues</div>
+                        <div class="stat-value">1</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-label">📝 语言</div>
+                        <div class="stat-value">TypeScript</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-label">📅 创建于</div>
+                        <div class="stat-value">2/14/2026</div>
+                    </div>
+                </div>
+                <div class="repo-summary">
+                    <strong>📋 项目简介：</strong> 全自动编程 Agent 实验   免责声明  本项目所有（100%）代码和提示词均由 AI 生成。运行前请自行审查，任何后果概不负责。   前提（由人类撰写）  所有内容，建立在以下前提下，如果不认可，速速关闭这个页面：  即使在非常复杂的项目中，AI 已经能够帮我们写绝大部分（甚至全部）代码。如果不行，不是 AI 的问题，是使用者本身的问题。AI 不是程序员的 bottleneck，程序员错误和老旧的工作方式是 AI 的 bottleneck。写代码本身将会越来越没有价值。  程序员的工作内容将会转变，从写代码，变成如何控制 AI。高效使用 AI 生成可用的项目，成为程序员新的核心竞争力。因此我们要探索的是：如何更好的在开发中使用 AI。   项目背景（由人类撰写）  起因是[这篇 Anthropic 的文章](https://www.anthropic.com/engineering/effective-harnesses-for-long-running-agents)，他们做了一个自动编程 Agent。  为了测试新发布的 GLM-5，同时切身感受这种超...
+                </div>
+                <a href="https://github.com/SamuelQZQ/auto-coding-agent-demo" target="_blank" class="repo-link">👉 查看项目详情</a>
+            </div>
+
+            <div class="repo-card">
+                <div class="repo-header">
+                    <div class="repo-title">
+                        <a href="https://github.com/thanhdo1110/Locket-Gold" target="_blank">9. Locket-Gold</a>
+                    </div>
+                </div>
+                <div class="repo-description">No description available</div>
+                
+                <div class="repo-stats">
+                    <div class="stat-item">
+                        <div class="stat-label">⭐ Stars</div>
+                        <div class="stat-value">53</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-label">👁️ Watchers</div>
+                        <div class="stat-value">53</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-label">🍴 Forks</div>
+                        <div class="stat-value">19</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-label">🐛 Issues</div>
+                        <div class="stat-value">0</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-label">📝 语言</div>
+                        <div class="stat-value">Python</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-label">📅 创建于</div>
+                        <div class="stat-value">2/13/2026</div>
+                    </div>
+                </div>
+                <div class="repo-summary">
+                    <strong>📋 项目简介：</strong> 🚀 Locket Gold Activator Bot (Professional Edition)  <div align="center">  [![Python](https://img.shields.io/badge/Python-3.9%2B-blue?style=for-the-badge&logo=python&logoColor=white)](https://python.org) [![Telegram](https://img.shields.io/badge/Telegram-Bot-2CA5E0?style=for-the-badge&logo=telegram&logoColor=white)](https://core.telegram.org/bots) [![AsyncIO](https://img.shields.io/badge/Async-Powered-green?style=for-the-badge&logo=icloud&logoColor=white)](https://docs.python.org/3/library/asy...
+                </div>
+                <a href="https://github.com/thanhdo1110/Locket-Gold" target="_blank" class="repo-link">👉 查看项目详情</a>
+            </div>
+
+            <div class="repo-card">
+                <div class="repo-header">
+                    <div class="repo-title">
+                        <a href="https://github.com/HackingDave/btrpa-scan" target="_blank">10. btrpa-scan</a>
+                    </div>
+                </div>
+                <div class="repo-description">Bluetooth Low Energy (BLE) scanner with Resolvable Private Address (RPA) resolution using Identity Resolving Keys (IRKs)   </div>
+                
+                <div class="repo-stats">
+                    <div class="stat-item">
+                        <div class="stat-label">⭐ Stars</div>
+                        <div class="stat-value">47</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-label">👁️ Watchers</div>
+                        <div class="stat-value">47</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-label">🍴 Forks</div>
+                        <div class="stat-value">7</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-label">🐛 Issues</div>
+                        <div class="stat-value">1</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-label">📝 语言</div>
+                        <div class="stat-value">Python</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-label">📅 创建于</div>
+                        <div class="stat-value">2/14/2026</div>
+                    </div>
+                </div>
+                <div class="repo-summary">
+                    <strong>📋 项目简介：</strong> btrpa-scan  A Bluetooth Low Energy (BLE) scanner with advanced Resolvable Private Address (RPA) resolution. Discover nearby BLE devices, track a specific device by MAC address, or resolve privacy-randomized addresses using an Identity Resolving Key (IRK).  Written by: David Kennedy ([@HackingDave](https://twitter.com/HackingDave)) Company: [TrustedSec](https://www.trustedsec.com)   Features  - Discover All Devices - Scan for all broadcasting BLE devices in range with signal stren...
+                </div>
+                <a href="https://github.com/HackingDave/btrpa-scan" target="_blank" class="repo-link">👉 查看项目详情</a>
+            </div>
+
+            <div class="stats-section">
+                <h3>📊 今日统计</h3>
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <h4>842</h4>
+                        <p>总 Stars 数</p>
+                    </div>
+                    <div class="stat-card">
+                        <h4>179</h4>
+                        <p>总 Forks 数</p>
+                    </div>
+                    <div class="stat-card">
+                        <h4>10</h4>
+                        <p>项目总数</p>
+                    </div>
+                    <div class="stat-card">
+                        <h4>4</h4>
+                        <p>涉及语言</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="footer">
+            <p>最后更新时间：2026/2/14 14:13:03</p>
+            <p style="margin-top: 10px;">由 GitHub Actions 自动生成 🤖</p>
+        </div>
+    </div>
+</body>
+</html>
