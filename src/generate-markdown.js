@@ -276,6 +276,9 @@ function generateHTML(repos) {
 <body>
     <div class="container">
         <div class="header">
+            <div style="margin-bottom: 20px;">
+                <a href="../index.html" style="color: white; text-decoration: none; background: rgba(255,255,255,0.2); padding: 10px 20px; border-radius: 5px; display: inline-block;">← 返回历史列表</a>
+            </div>
             <h1>🚀 GitHub Star 飙升项目日报</h1>
             <p class="subtitle">${today} · 过去24小时star增长最多的前10个项目</p>
         </div>
@@ -414,6 +417,181 @@ function generateHTML(repos) {
   return html;
 }
 
+function generateArchivePage() {
+  const docsDir = path.join(__dirname, '../docs');
+  
+  if (!fs.existsSync(docsDir)) {
+    return '';
+  }
+  
+  const files = fs.readdirSync(docsDir);
+  const mdFiles = files.filter(f => f.startsWith('daily-') && f.endsWith('.md'));
+  
+  if (mdFiles.length === 0) {
+    return '';
+  }
+  
+  const dates = mdFiles
+    .map(f => f.replace('daily-', '').replace('.md', ''))
+    .sort()
+    .reverse();
+  
+  let html = `<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GitHub Star 飙升项目 - 历史记录</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 40px;
+            text-align: center;
+        }
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+        .header .subtitle {
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+        .content {
+            padding: 40px;
+        }
+        .date-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+        }
+        .date-card {
+            background: #f8f9fa;
+            border-radius: 8px;
+            padding: 25px;
+            text-align: center;
+            border: 2px solid #e0e0e0;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+        .date-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            border-color: #667eea;
+        }
+        .date-card h3 {
+            font-size: 1.5em;
+            color: #667eea;
+            margin-bottom: 10px;
+        }
+        .date-card p {
+            color: #666;
+            font-size: 0.9em;
+        }
+        .latest {
+            border-color: #28a745;
+            background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+        }
+        .latest h3, .latest p {
+            color: white;
+        }
+        .footer {
+            background: #f8f9fa;
+            padding: 20px;
+            text-align: center;
+            color: #666;
+            border-top: 1px solid #e0e0e0;
+        }
+        .info-box {
+            background: #e7f3ff;
+            border-left: 4px solid #667eea;
+            padding: 20px;
+            margin-bottom: 30px;
+            border-radius: 4px;
+        }
+        .info-box h3 {
+            color: #667eea;
+            margin-bottom: 10px;
+        }
+        .info-box p {
+            color: #555;
+            line-height: 1.6;
+        }
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 1.8em;
+            }
+            .content {
+                padding: 20px;
+            }
+            .date-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>📅 GitHub Star 飙升项目历史记录</h1>
+            <p class="subtitle">查看过去每日的热门项目趋势</p>
+        </div>
+        
+        <div class="content">
+            <div class="info-box">
+                <h3>📊 数据说明</h3>
+                <p>每日自动整理过去24小时内star增长最多的前10个GitHub项目。点击日期查看该日的详细项目列表。</p>
+            </div>
+            
+            <div class="date-grid">
+`;
+  
+  dates.forEach((date, index) => {
+    const isLatest = index === 0;
+    const latestClass = isLatest ? ' latest' : '';
+    const latestBadge = isLatest ? ' (最新)' : '';
+    
+    html += `                <div class="date-card${latestClass}" onclick="window.location.href='archive/${date}.html'">
+                    <h3>${date}${latestBadge}</h3>
+                    <p>查看该日的热门项目</p>
+                </div>
+`;
+  });
+  
+  html += `            </div>
+        </div>
+        
+        <div class="footer">
+            <p>最后更新时间：${new Date().toLocaleString('zh-CN', { timeZone: 'Asia/Shanghai' })}</p>
+            <p style="margin-top: 10px;">由 GitHub Actions 自动生成 🤖</p>
+        </div>
+    </div>
+</body>
+</html>`;
+  
+  return html;
+}
+
 async function generateDocs() {
   const dataPath = path.join(__dirname, '../data/trending-repos.json');
   
@@ -428,15 +606,21 @@ async function generateDocs() {
   const html = generateHTML(repos);
   
   const docsDir = path.join(__dirname, '../docs');
+  const archiveDir = path.join(docsDir, 'archive');
   fs.mkdirSync(docsDir, { recursive: true });
+  fs.mkdirSync(archiveDir, { recursive: true });
   
   const today = new Date().toISOString().split('T')[0];
   
   fs.writeFileSync(path.join(docsDir, `daily-${today}.md`), markdown);
-  fs.writeFileSync(path.join(docsDir, 'index.html'), html);
+  fs.writeFileSync(path.join(archiveDir, `${today}.html`), html);
+  
+  const archivePage = generateArchivePage();
+  fs.writeFileSync(path.join(docsDir, 'index.html'), archivePage);
   
   console.log(`Markdown generated: ${path.join(docsDir, `daily-${today}.md`)}`);
-  console.log(`HTML generated: ${path.join(docsDir, 'index.html')}`);
+  console.log(`Archive HTML generated: ${path.join(archiveDir, `${today}.html`)}`);
+  console.log(`Archive index page generated: ${path.join(docsDir, 'index.html')}`);
 }
 
 if (require.main === module) {
