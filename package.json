@@ -1,0 +1,20 @@
+{
+  "name": "github-stars-daily",
+  "version": "1.0.0",
+  "description": "Daily GitHub trending repositories tracker",
+  "main": "index.js",
+  "scripts": {
+    "start": "node src/fetch-trending.js && node src/generate-markdown.js && node src/deploy-pages.js",
+    "fetch": "node src/fetch-trending.js",
+    "generate": "node src/generate-markdown.js",
+    "deploy": "node src/deploy-pages.js"
+  },
+  "keywords": ["github", "trending", "stars", "actions"],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "@actions/core": "^1.10.1",
+    "@actions/github": "^6.0.0",
+    "octokit": "^3.1.2"
+  }
+}
